@@ -15,14 +15,6 @@ namespace CodeGen
             foreach(CodeNode node in tree.Children) { _Generate(node, 0); }
             return builder.ToString().TrimStart('\n'); // 先頭の改行を1つ削除
         }
-        /*
-        public string Generate(CodeNode node)
-        {
-            builder.Clear();
-            _Generate(node, 0);
-            return builder.ToString();
-        }
-        */
         private void _Generate(CodeNode node, int indent)
         {
             builder.Append("\n");
@@ -35,9 +27,6 @@ namespace CodeGen
                 foreach(CodeNode n in node.Children) { _Generate(n, indent); }
                 indent--;
             }
-            // 最後の改行コードを削除
-//            if (!isLastNewLineDelete) { builder.Remove(builder.Length - 1, 1); isLastNewLineDelete=true; }
-            if (!isLastNewLineDelete) { builder.Remove(builder.Length - 2, 2); isLastNewLineDelete=true; }
             // ブロック終了
             BlockEnd(node, indent);
         }
@@ -56,15 +45,5 @@ namespace CodeGen
                 }
             }
         }
-        /*
-        private string Block(BlockCodeNode node, string keyword, int indent) => node.Style switch
-        {
-            BlockCodeNode.StyleType.None => return, // 何もしないときを表現できない……
-            BlockCodeNode.StyleType.Minimum => builder.Append(keyword),
-            BlockCodeNode.StyleType.Space => builder.Append($" {keyword}")",
-            BlockCodeNode.StyleType.NewLine => builder.Insert(builder.Length, Indent, indent).Append(keyword),
-            _ => "",
-        };
-        */
     }
 }
