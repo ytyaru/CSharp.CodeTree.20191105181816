@@ -13,7 +13,7 @@ namespace CodeGen
             builder.Clear();
             isLastNewLineDelete = false;
             foreach(CodeNode node in tree.Children) { _Generate(node, 0); }
-            return builder.ToString();
+            return builder.ToString().TrimStart('\n'); // 先頭の改行を1つ削除
         }
         /*
         public string Generate(CodeNode node)
@@ -25,10 +25,10 @@ namespace CodeGen
         */
         private void _Generate(CodeNode node, int indent)
         {
+            builder.Append("\n");
             builder.Insert(builder.Length, Indent, indent).Append(node.Value);
             // ブロック開始
             BlockStart(node, indent);
-            builder.Append("\n");
             if (0 < node.Children.Count)
             {
                 indent++;
