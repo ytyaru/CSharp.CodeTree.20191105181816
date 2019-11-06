@@ -7,11 +7,9 @@ namespace CodeGen
     {
         public string Indent { get; set; } = "    ";
         private StringBuilder builder = new StringBuilder();
-        private bool isLastNewLineDelete;
         public string Generate(CodeTree tree)
         {
             builder.Clear();
-            isLastNewLineDelete = false;
             foreach(CodeNode node in tree.Children) { _Generate(node, 0); }
             return builder.ToString().TrimStart('\n'); // 先頭の改行を1つ削除
         }
